@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>세미나룸 예약 관리</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>세미나룸 예약 관리</h1>
+      <p>세미나룸 등록, 조회, 예약을 관리하는 미니 API 화면</p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2>세미나룸 등록</h2>
+        <input id="roomName" placeholder="세미나룸 이름">
+        <input id="roomCapacity" type="number" placeholder="수용 인원">
+        <input id="roomEquipment" placeholder="장비">
+        <button onclick="createRoom()">등록</button>
+      </div>
+
+      <div class="card">
+        <h2>예약 등록</h2>
+        <input id="resRoomId" type="number" placeholder="room_id">
+        <input id="resUserName" placeholder="예약자 이름">
+        <input id="resUserEmail" placeholder="이메일">
+        <input id="resDate" type="date">
+        <input id="resStartTime" type="time">
+        <input id="resEndTime" type="time">
+        <input id="resPurpose" placeholder="목적">
+        <button onclick="createReservation()">예약</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>세미나룸 목록</h2>
+        <button onclick="loadRooms()">새로고침</button>
+      </div>
+      <div id="roomList" class="list"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>예약 목록</h2>
+        <div class="filters">
+          <input id="filterRoomId" type="number" placeholder="room_id">
+          <input id="filterDate" type="date">
+          <button onclick="loadReservations()">조회</button>
+        </div>
+      </div>
+      <div id="reservationList" class="list"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
