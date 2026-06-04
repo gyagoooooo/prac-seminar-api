@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    container_name: seminar_api
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: seminar_user
+      DB_PASSWORD: seminar_pass
+      DB_NAME: seminar_db
+    depends_on:
+      - db
+    restart: "no"
+
+  db:
+    image: mariadb:10.6
+    container_name: seminar_db
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: seminar_db
+      MARIADB_USER: seminar_user
+      MARIADB_PASSWORD: seminar_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - seminar_data:/var/lib/mysql
+      - ./migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql
+    restart: always
+
+volumes:
+  seminar_data:

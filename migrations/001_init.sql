@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS seminar_db
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE seminar_db;
+
+CREATE TABLE IF NOT EXISTS rooms (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  capacity INT NOT NULL,
+  equipment VARCHAR(255) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reservations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  room_id INT NOT NULL,
+  user_name VARCHAR(100) NOT NULL,
+  user_email VARCHAR(100) NOT NULL,
+  date DATE NOT NULL,
+  start_time TIME NOT NULL,
+  end_time TIME NOT NULL,
+  purpose VARCHAR(255) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_reservations_room
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO rooms (name, capacity, equipment)
+VALUES
+('A 세미나룸', 8, 'TV, Whiteboard'),
+('B 세미나룸', 12, 'Projector, HDMI'),
+('C 세미나룸', 20, 'Projector, Speaker')
+ON DUPLICATE KEY UPDATE name = name;
